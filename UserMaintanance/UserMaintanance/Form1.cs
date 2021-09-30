@@ -69,5 +69,11 @@ namespace UserMaintanance
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var selecteditem = (User)listBox1.SelectedItem;
+            users.Remove(selecteditem);
+        }
     }
 }
