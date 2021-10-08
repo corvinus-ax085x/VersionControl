@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Reflection;
 
 namespace week04
 {
@@ -27,5 +29,7 @@ namespace week04
             lakasok = context.Flats.ToList();
         
         }
+
+        Excel.Application xlApp; // A Microsoft Excel alkalmazás
     }
 }
