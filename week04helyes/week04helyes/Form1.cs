@@ -26,6 +26,8 @@ namespace week04helyes
         {
             InitializeComponent();
             LoadData();
+            CreateExcel();
+            FormatTable();
         }
         public void LoadData()
         {
@@ -41,7 +43,7 @@ namespace week04helyes
                 xlWB = xlApp.Workbooks.Add(Missing.Value);
                 xLSheet = xlWB.ActiveSheet;
 
-                //CreateTabel();
+                CreateTabel();
 
                 xlApp.Visible = true;
                 xlApp.UserControl = true;
@@ -121,6 +123,30 @@ namespace week04helyes
             ExcelCoordinate += x.ToString();
 
             return ExcelCoordinate;
+        }
+
+        private void FormatTable()
+        {
+            Excel.Range headerRange = xLSheet.get_Range(GetCell(1, 1), GetCell(1, headers.Length));
+            headerRange.Font.Bold = true;
+            headerRange.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+            headerRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+            headerRange.EntireColumn.AutoFit();
+            headerRange.RowHeight = 40;
+            headerRange.Interior.Color = Color.LightBlue;
+            headerRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+
+            int lastRowID = xLSheet.UsedRange.Rows.Count;
+            Excel.Range completeTableRange = xLSheet.get_Range(GetCell(1, 1), GetCell(lastRowID, headers.Length));
+            completeTableRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+
+            Excel.Range firstColumn = xLSheet.get_Range(GetCell(2, 1), GetCell(lastRowID, 1));
+            firstColumn.Font.Bold = true;
+            firstColumn.Interior.Color = Color.LightYellow;
+
+            Excel.Range lastColumn = xLSheet.get_Range(GetCell(2, 9), GetCell(lastRowID, 9));
+            lastColumn.Interior.Color = Color.LightGreen;
+            lastColumn.NumberFormat = "0.00";
         }
     }
 }
