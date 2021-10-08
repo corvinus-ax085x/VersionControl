@@ -141,6 +141,14 @@ namespace week04
             int lastRowID = xLSheet.UsedRange.Rows.Count;
             Excel.Range completeTableRange = xLSheet.get_Range(GetCell(1, 1), GetCell(lastRowID, headers.Length));
             completeTableRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+
+            Excel.Range firstColumn = xLSheet.get_Range(GetCell(2, 1), GetCell(lastRowID, 1));
+            firstColumn.Font.Bold = true;
+            firstColumn.Interior.Color = Color.LightYellow;
+
+            Excel.Range lastColumn = xLSheet.get_Range(GetCell(2, 9), GetCell(lastRowID, 9));
+            lastColumn.Interior.Color = Color.LightGreen;
+            lastColumn.NumberFormat = "0.00";
         }
     }
 }
