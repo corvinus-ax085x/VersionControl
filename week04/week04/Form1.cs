@@ -16,6 +16,9 @@ namespace week04
     {
         RealEstateEntities1 context = new RealEstateEntities1();
         List<Flat> lakasok;
+        Excel.Application xlApp; // A Microsoft Excel alkalmazás
+        Excel.Workbook xlWB; // A létrehozott munkafüzet
+        Excel.Worksheet xLSheet; // Munkalap a munkafüzeten belül
         public Form1()
         {
             InitializeComponent();
@@ -30,6 +33,26 @@ namespace week04
         
         }
 
-        Excel.Application xlApp; // A Microsoft Excel alkalmazás
+        public void CreateExcel()
+        {
+            try
+            {
+                xlApp = new Excel.Application(); // Excel elindítása és az applikáció objektum betöltése
+
+                xlWB = xlApp.Workbooks.Add(Missing.Value);
+
+            }
+            catch (Exception ex)
+            {
+                string errorMSG = string.Format("Error: {0}\nLine: {1}", ex.Message, ex.Source);
+                xlWB.Close(false, Type.Missing, Type.Missing);
+                xlApp.Quit();
+                xlWB = null;
+                xlApp = null;
+                
+            }
+        }
+
+        
     }
 }
