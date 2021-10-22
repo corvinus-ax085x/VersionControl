@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using week05_VaR.Entities;
 
 namespace week05_VaR
 {
@@ -14,11 +15,27 @@ namespace week05_VaR
     {
         PortfolioEntities context = new PortfolioEntities();
         List<Tick> Ticks;
+        List<Portfolioitem> Portfolio = new List<Portfolioitem>();
         public Form1()
         {
             InitializeComponent();
             Ticks = context.Ticks.ToList();
             dataGridView1.DataSource = Ticks;
+
+            CreatePortfolio();
+        }
+
+        private void CreatePortfolio()
+        {
+            Portfolio.Add(new Portfolioitem() { Index = "OTP", Volume = 10 });
+            Portfolio.Add(new Portfolioitem() { Index = "ZWACK", Volume = 10 });
+            Portfolio.Add(new Portfolioitem() { Index = "ELMU", Volume = 10 });
+
+            dataGridView2.DataSource = Portfolio;
+            //Portfolioitem p = new Portfolioitem();
+            //p.Index = "OTP";
+            //p.Volume = 10;
+            //Portfolio.Add(p);
         }
     }
 }
