@@ -12,13 +12,48 @@ namespace week06helyes
 {
     public partial class Form1 : Form
     {
-        BindingList<RateData> Rates;
+        BindingList<RateData> Rates = new BindingList<RateData>();
+        BindingList<string> Currencies = new BindingList<string>();
         public Form1()
         {
             InitializeComponent();
+            getCurrency();
             dataGridView1.DataSource = Rates;
             var callservice = CallService();
+            comboBox1.DataSource = Currencies;
+            RefreshData();
+        }
 
+        string getCurrency()
+        {
+            var mnbService = new MNBArfolyamServiceSoapClient();
+            var request = new GetCurrenciesRequestBody()
+            {
+            };
+            var response = mnbService.GetCurrencies(request);
+            var Currresult = response.GetCurrenciesResult;
+            Console.WriteLine(Currresult);
+            return Currresult;
+        }
+
+        void CurrXMLProcessing(string result)
+        {
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml(result);
+            var itemC = xml.DocumentElement;
+            var childElement = (XmlElement)itemC.ChildNodes[0];
+            foreach (XmlElement item in childElement)
+            {
+                string curr;
+
+                
+                if (childElement == null)
+                    continue;
+                
+                curr = item.InnerText;
+                Currencies.Add(curr);
+
+            }
         }
 
         string CallService()
@@ -27,9 +62,9 @@ namespace week06helyes
             var mnbService = new MNBArfolyamServiceSoapClient();
             var request = new GetExchangeRatesRequestBody()
             {
-                currencyNames = "EUR",
-                startDate = "2020-01-01",
-                endDate = "2020-06-30"
+                currencyNames = comboBox1.Text,
+                startDate = dateTimePicker1.Value.ToString(),
+                endDate = dateTimePicker2.Value.ToString()
             };
             var response = mnbService.GetExchangeRates(request);
             var result = response.GetExchangeRatesResult;
@@ -47,6 +82,8 @@ namespace week06helyes
                 Rates.Add(rd);
                 rd.Date = DateTime.Parse(item.GetAttribute("date"));
                 var childElement = (XmlElement)item.ChildNodes[0];
+                if (childElement == null)
+                    continue;
                 rd.Currency = childElement.GetAttribute("curr");
 
                 // Érték
@@ -76,4 +113,30 @@ namespace week06helyes
             chartArea.AxisY.IsStartedFromZero = false;
         }
 
+        void RefreshData()
+        {
+            Rates.Clear();
+            dataGridView1.DataSource = Rates;
+            var asd = CallService();
+            var Curr = getCurrency();
+
+            XMLProcessing(asd);
+            CurrXMLProcessing(Curr);
+            Graph();
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshData();
+        }
     }
