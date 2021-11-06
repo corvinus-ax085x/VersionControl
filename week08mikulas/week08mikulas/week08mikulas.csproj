@@ -94,6 +94,8 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Images\car.png" />
+    <Content Include="Images\carr.png" />
+    <Content Include="Images\race-car-colored.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
