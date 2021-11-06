@@ -41,7 +41,7 @@ namespace week08mikulas
             var maxRightPosition = 0;
             foreach (var ball in _balls)
             {
-                ball.MoveBall();
+                ball.MoveToy();
                 if (ball.Left > maxRightPosition)
                     maxRightPosition = ball.Left;
             }
