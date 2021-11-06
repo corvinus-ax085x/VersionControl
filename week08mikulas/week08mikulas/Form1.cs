@@ -14,13 +14,28 @@ namespace week08mikulas
 {
     public partial class Form1 : Form
     {
+        private Toy _nextToy;
         private List<Toy> _toys = new List<Toy>();
         private IToyFactory _factory;
 
         public IToyFactory Factory
         {
             get { return _factory; }
-            set { _factory = value; }
+            set 
+            {
+                _factory = value;
+                DisplayNext();
+            }
+        }
+
+        private void DisplayNext()
+        {
+            if (_nextToy != null)
+                Controls.Remove(_nextToy);
+            _nextToy = Factory.CreateNew();
+            _nextToy.Top = label1.Top + label1.Height + 20;
+            _nextToy.Left = label1.Left;
+            Controls.Add(_nextToy);
         }
 
         public Form1()
@@ -53,6 +68,16 @@ namespace week08mikulas
                 mainPanel.Controls.Remove(oldestBall);
                 _toys.Remove(oldestBall);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Factory = new CarFactory();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Factory = new BallFactory();
         }
     }
 }
