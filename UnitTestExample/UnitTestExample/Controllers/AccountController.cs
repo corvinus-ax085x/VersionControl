@@ -66,7 +66,6 @@ namespace UnitTestExample.Controllers
                 password,
                 @"^[0-9]."))
                 return false;
-
             return true;
         }
     }
