@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9820AABA-253B-47B3-902F-A256147FBA12}</ProjectGuid>
+    <ProjectGuid>{76088131-34FE-46E3-BDF2-BADD0EE1F0A4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>week09Mikroszimulacio</RootNamespace>
-    <AssemblyName>week09Mikroszimulacio</AssemblyName>
+    <RootNamespace>week09</RootNamespace>
+    <AssemblyName>week09</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

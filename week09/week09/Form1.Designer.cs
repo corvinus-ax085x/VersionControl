@@ -1,5 +1,5 @@
 ﻿
-namespace week09Mikroszimulacio
+namespace week09
 {
     partial class Form1
     {
