@@ -125,7 +125,7 @@ namespace week09
                     {
                         Age = int.Parse(line[0]),
                         NbrOfChildren = int.Parse(line[1]),
-                        P = double.Parse(line[2].Replace(",", "."))
+                        P = double.Parse(line[2])
                     });
 
                 }
@@ -149,7 +149,7 @@ namespace week09
                         Gender = (Gender)Enum.Parse(typeof(Gender), line[0]),
                         Age = int.Parse(line[1]),
                         
-                        P = double.Parse(line[2].Replace(",", "."))
+                        P = double.Parse(line[2])
                     });
 
                 }
