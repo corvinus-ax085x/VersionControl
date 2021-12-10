@@ -17,18 +17,56 @@ namespace EvolAlgorithm
         GameArea ga = null;
 
         int populationSize = 100;
-        int nbrOfDtepd = 10;
-        int nbrOfStepsncrement = 10;
+        int nbrOfSteps = 10;
+        int nbrOfStepsIncrement = 10;
         int generation = 1;
         public Form1()
         {
             InitializeComponent();
+
+            gc.GameOver += Gc_GameOver;
 
             ga = gc.ActivateDisplay();
             this.Controls.Add(ga);
 
             gc.AddPlayer();
             gc.Start(true);
+
+            for (int i = 0; i < populationSize; i++)
+                gc.AddPlayer(nbrOfSteps);
+
+            gc.Start();
+
+            
+        }
+
+        private void Gc_GameOver(object sender)
+        {
+            generation++;
+            label2.Text = string.Format(
+        "{0}. generáció",
+        generation);
+
+            var playerList = from p in gc.GetCurrentPlayers()
+                             orderby p.GetFitness() descending
+                             select p;
+            var topPerformers = playerList.Take(playerList.Count() / 2).ToList();
+
+            gc.ResetCurrentLevel();
+            foreach (var p in topPerformers)
+            {
+                var brain = p.Brain.Clone();
+                if (generation % 3 == 0)
+                    gc.AddPlayer(brain.ExpandBrain(nbrOfStepsIncrement));
+                else
+                    gc.AddPlayer(brain);
+
+                if (generation % 3 == 0)
+                    gc.AddPlayer(brain.Mutate().ExpandBrain(nbrOfStepsIncrement));
+                else
+                    gc.AddPlayer(brain.Mutate());
+            }
+            gc.Start();
         }
     }
 }
